@@ -1,3 +1,4 @@
+import java.sql.SQLOutput;
 import java.util.Scanner;
 import java.util.Arrays;
 import java.util.*;
@@ -7,22 +8,61 @@ class main {
         temp.test();
     }
 }
-class temp{
+class temp {
     public static void test() {
         computer c1 = new computer();
-        player p1 = new player() {
-        };
+        player p1 = new player();
 
+        int secretCode = c1.arraytoInt(c1.comGenerated());
+        System.out.println(secretCode);
+        Scanner sc = new Scanner(System.in);
+
+
+        for(int i = 7 ; i > 0; i--) {
+            int  n = innputGate();
+            System.out.println("You Guessed: " + n);
+            int[] inputArr = inputArr(n);
+
+
+            int bulls = bullCounter(inputArr, c1.secretCode(secretCode));
+            int cows = cowCounter(inputArr, c1.secretCode(secretCode)) - bulls;
+            if (bulls!=4) {
+              String out = bulls + " Bulls " + cows + " Cows |"+"Try again "+ i + " attempts left";
+                System.out.println(out);
+            }
+            if(bulls == 4){
+                String out = "You Won";
+                System.out.println(out);
+            }if(cows == 0 && bulls ==0){
+                String out = bulls + " bulls " + cows + " cows | " + "Try again" + i + " attempts left";
+                System.out.println(out);
+            }
+        }
+    }
+    public static int innputGate() {
+
+      int n = input();
+      if (!inputValidation(n)) {
+          System.out.println("Please Enter A valid input");
+          innputGate();
+      }
+        return n;
+    }
+    public static int input() {
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt();
-        while (!inputValidation(n)) {
-            System.out.println("Please Enter A valid input");;
-            n = sc.nextInt();
-        }
-        c1.testPrint();
-        p1.player(n);
-        p1.print();
+        return n;
     }
+    public static int[] inputArr(int input) {
+        int[] inputArr = new int[4];
+        for (int i = 0; i < 4; i++) {
+            inputArr[i] = input % 10;
+            input /= 10;
+        }
+        return inputArr;
+    }
+
+
     //inputValidation
     public static boolean inputValidation(int input) {
         if (input < 1000 || input > 9999) {
@@ -42,7 +82,29 @@ class temp{
         }
         return true;
     }
+    public static int bullCounter(int[] inputArr, int[] secretCode) {
+        int bulls = 0;
+        for (int i = 0; i < 4; i++) {
+            if (secretCode[i] == inputArr[i]) {
+                bulls++;
+            }
+        }
+        return bulls;
+    }
+    public static int cowCounter(int[] inputArr, int[] secretCode) {
+        int cows = 0;
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                if (secretCode[i] == inputArr[j]) {
+                    cows++;
+                }
+            }
+        }
+        return cows;
+    }
 }
+
+
 class player {
     private int input;
     public void setinput(int input) {
@@ -97,7 +159,7 @@ class computer extends player {
         Random rand = new Random();
         int[] num = new int[4];
         for (int i = 0; i < 4; i++) {
-            num[i] = rand.nextInt(10)+1%10;
+            num[i] = rand.nextInt(9)+1;
         }
         if (isUnique(num)) {
             return num;
