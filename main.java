@@ -16,7 +16,7 @@ class temp{
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt();
         while (!inputValidation(n)) {
-            p1.inputNotValid();
+            System.out.println("Please Enter A valid input");;
             n = sc.nextInt();
         }
         c1.testPrint();
@@ -42,11 +42,9 @@ class temp{
         }
         return true;
     }
-
 }
 class player {
     private int input;
-
     public void setinput(int input) {
          this.input = input;
     }
@@ -90,18 +88,16 @@ class player {
         }
         return num;
     }
-
 }
 class computer extends player {
-        int arr[]= {1,2,3,4};
     public void testPrint() {
-        System.out.println(arraytoInt();
+        System.out.println(arraytoInt(comGenerated()));
     }
     public int[] comGenerated() {             //recursive method that generates non-repeating array of numbers
         Random rand = new Random();
         int[] num = new int[4];
         for (int i = 0; i < 4; i++) {
-            num[i] = rand.nextInt(10);
+            num[i] = rand.nextInt(10)+1%10;
         }
         if (isUnique(num)) {
             return num;
@@ -109,5 +105,4 @@ class computer extends player {
             return comGenerated();
         }
     }
-
 }
