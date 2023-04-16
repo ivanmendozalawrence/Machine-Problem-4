@@ -164,7 +164,7 @@ class computer extends player {
         if (isUnique(num)) {
             return num;
         } else {
-            return comGenerated();
+            return comGenerated();//
         }
     }
 }
