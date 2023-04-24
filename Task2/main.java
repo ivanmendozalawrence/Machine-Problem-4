@@ -1,3 +1,4 @@
+package Task2;
 
 import java.util.Scanner;
 import java.util.Arrays;
@@ -122,6 +123,24 @@ class player {
     public String toStringArr(int arr[]) {
         return Arrays.toString(arr);
     }
+    public static boolean inputValidation(int input) {
+        if (input < 1000 || input > 9999) {
+            return false;
+        }
+        int[] num = new int[4];
+        for (int i = 0; i < 4; i++) {
+            num[i] = input % 10;
+            input /= 10;
+        }
+        for (int i = 0; i < 4; i++) {
+            for (int j = i + 1; j < 4; j++) {
+                if (num[i] == num[j]) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
     public int arraytoInt(int arrays[]) {
         StringBuilder strNum = new StringBuilder();
 
@@ -149,6 +168,29 @@ class player {
             input /= 10;
         }
         return num;
+    }
+
+    public static int innputGate() {
+
+        int n = input();
+        if (!inputValidation(n)) {
+            System.out.println("Please Enter A valid input");
+            innputGate();
+        }
+        return n;
+    }
+    public static int input() {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        return n;
+    }
+    public static int[] inputArr(int input) {
+        int[] inputArr = new int[4];
+        for (int i = 0; i < 4; i++) {
+            inputArr[i] = input % 10;
+            input /= 10;
+        }
+        return inputArr;
     }
 }
 class computer extends player {
