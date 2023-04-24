@@ -3,7 +3,7 @@ import java.util.Scanner;
 import java.util.Arrays;
 import java.util.Random;
 
-public class main {
+public class Main {
     public static void main(String[] args) {
 
         game g = new game();
@@ -14,22 +14,19 @@ public class main {
 class game {
     player p = new player();
     public  void turn(){
-        human play = new human();
-        System.out.printf("Please select a type of AI\nEasy AI: 1\nMedium AI: 2\n");
+        System.out.print("Please select a type of AI\nEasy AI: 1\nMedium AI: 2\n");
         int choice = p.input();
         switch (choice) {
-            case 1 :
+            case 1 -> {
                 System.out.println("Easy AI selected");
                 easyAi easy = new easyAi();
                 easy.start(easy.secretCode());
-                break;
-            case 2 :
+            }
+            case 2 -> {
                 System.out.println("Medium AI selected");
                 midAi medium = new midAi();
                 medium.start(medium.secretCode());
-                break;
-
-
+            }
         }
     }
 }
