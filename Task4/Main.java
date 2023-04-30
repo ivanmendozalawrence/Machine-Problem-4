@@ -114,86 +114,93 @@ class easyAi{
     }
 }
 class midAi extends easyAi {
-
-        public void start(int secretCode){
-            int[][] aiGuesses = new int[7][4]; // 2D array to store the AI's guesses
-            int[] secretCodeArr = play.inputArr(secretCode);
-            int humanCtr = 7;
-            int computerCtr = 7;
-            int turn = 0;
-            while (turn < 14) {
-                int computerGuess = com.generatedInt();
-                turn++;
-                boolean repeatGuess = false;
-                for (int i = 0; i < aiGuesses.length; i++) {
-                    if (Arrays.equals(aiGuesses[i], com.inputArr(computerGuess))) {
-                        repeatGuess = true;
-                        break;
-                    }
-                }
-                if (!repeatGuess) {
-                    // Store the guess in the array
-                    aiGuesses[7 - computerCtr] = com.inputArr(computerGuess);
-                    if (turn % 2 == 0) {
-                        System.out.println("Computer's Turn");
-                        int[] computerGuessArr = com.inputArr(computerGuess);
-                        int bulls = com.bullCounter(secretCodeArr, computerGuessArr);
-                        int cows = com.cowCounter(secretCodeArr, computerGuessArr) - bulls;
-                        if (bulls != 4) {
-                            System.out.println("Computer Guessed: " + computerGuess);
-                            humanCtr--;
-                            String out = bulls + " Bulls " + cows + " Cows |" + "Try again " + humanCtr + " attempts left";
-                            System.out.println(out);
-                            System.out.println("-----------------------------------------------------");
-                        } else if (cows == 0 && bulls == 0) {
-                            System.out.println("Computer Guessed: " + computerGuess);
-                            humanCtr--;
-                            String out = bulls + "bulls " + cows + " cows | " + "Try again " + humanCtr + " attempts left";
-                            System.out.println(out);
-                            System.out.println("-----------------------------------------------------");
-                        } else {
-                            System.out.println("Computer Guessed: " + computerGuess);
-                            String out = "Computer Won";
-                            System.out.println(out);
-                            System.out.println("-----------------------------------------------------");
-                        }
+    public void start(int secretCode){
+        int[][] aiGuesses = new int[8][4]; // 2D array to store the AI's guesses
+        int[] secretCodeArr = play.inputArr(secretCode);
+        int humanCtr = 7;
+        int computerCtr = 7;
+        int turn = 0;
+        while (turn < 14 ) {
+            int computerGuess = com.generatedInt();
+            turn++;
+            boolean repeatGuess = isRepeatGuess(computerGuess, aiGuesses);
+            if (!repeatGuess) {
+                // Store the guess in the array
+                aiGuesses[7 - computerCtr] = com.inputArr(computerGuess);
+                if (turn % 2 == 0) {
+                    System.out.println("Computer's Turn");
+                    int[] computerGuessArr = com.inputArr(computerGuess);
+                    int bulls = com.bullCounter(secretCodeArr, computerGuessArr);
+                    int cows = com.cowCounter(secretCodeArr, computerGuessArr) - bulls;
+                    if (bulls != 4) {
+                        System.out.println("Computer Guessed: " + computerGuess);
+                        humanCtr--;
+                        String out = bulls + " Bulls " + cows + " Cows |" + "Try again " + humanCtr + " attempts left";
+                        System.out.println(out);
+                        System.out.println("-----------------------------------------------------");
+                    } else if (cows == 0 && bulls == 0) {
+                        System.out.println("Computer Guessed: " + computerGuess);
+                        humanCtr--;
+                        String out = bulls + "bulls " + cows + " cows | " + "Try again " + humanCtr + " attempts left";
+                        System.out.println(out);
+                        System.out.println("-----------------------------------------------------");
                     } else {
-                        System.out.println("Player's Turn");
-                        int humanGuess = play.input();
-                        int[] humanGuessArr = play.inputArr(humanGuess);
-                        int bulls = com.bullCounter(secretCodeArr, humanGuessArr);
-                        int cows = com.cowCounter(secretCodeArr, humanGuessArr) - bulls;
-                        if (bulls == 4) {
-                            System.out.println("Player Guessed: " + humanGuess);
-                            String out = "You Won";
-                            System.out.println(out);
-                            System.out.println("-----------------------------------------------------");
-                        } else if (bulls == 0 && cows == 0) {
-                            System.out.println("Player Guessed: " + humanGuess);
-                            computerCtr--;
-                            String out = bulls + " bulls " + cows + " cows | " + "Try again " + computerCtr + " attempts left";
-                            System.out.println(out);
-                            System.out.println("-----------------------------------------------------");
-                        } else {
-                            System.out.println("Player Guessed: " + humanGuess);
-                            computerCtr--;
-                            String out = bulls + " Bulls " + cows + " Cows |" + "Try again " + computerCtr + " attempts left";
-                            System.out.println(out);
-                            System.out.println("-----------------------------------------------------");
-                        }
+                        System.out.println("Computer Guessed: " + computerGuess);
+                        String out = "Computer Won";
+                        System.out.println(out);
+                        System.out.println("-----------------------------------------------------");
                     }
                 } else {
-                    // AI repeats a guess, skip this turn
-                    turn--;
+                    System.out.println("Player's Turn");
+                    int humanGuess = play.input();
+                    int[] humanGuessArr = play.inputArr(humanGuess);
+                    int bulls = com.bullCounter(secretCodeArr, humanGuessArr);
+                    int cows = com.cowCounter(secretCodeArr, humanGuessArr) - bulls;
+                    if(bulls == 4) {
+                        System.out.println("Player Guessed: " + humanGuess);
+                        String out = "You Won";
+                        System.out.println(out);
+                        System.out.println("-----------------------------------------------------");
+                    }
+                    else if (bulls == 0 && cows == 0) {
+                        System.out.println("Player Guessed: " + humanGuess);
+                        computerCtr--;
+                        String out = bulls + " bulls " + cows + " cows | " + "Try again " + computerCtr + " attempts left";
+                        System.out.println(out);
+                        System.out.println("-----------------------------------------------------");
+                    }
+                    else{
+                        System.out.println("Player Guessed: " + humanGuess);
+                        computerCtr--;
+                        String out = bulls + " Bulls " + cows + " Cows |"+"Try again "+ computerCtr + " attempts left";
+                        System.out.println(out);
+                        System.out.println("-----------------------------------------------------");
+                    }
+
                 }
+
+            } else {
+                // AI repeats a guess, skip this turn
+                turn--;
             }
-            if (turn == 14) {
-                System.out.println("No one guessed correctly,");
+            if (humanCtr == 0 && computerCtr ==0){
 
-
+                System.out.println("No one guessed correctly, Its a tie");
+                System.out.println("-----------------------------------------------------");
             }
         }
+
     }
+
+    private boolean isRepeatGuess(int computerGuess, int[][] aiGuesses) {
+        for (int i = 0; i < aiGuesses.length; i++) {
+            if (Arrays.equals(aiGuesses[i], com.inputArr(computerGuess))) {
+                return true;
+            }
+        }
+        return false;
+    }
+}
 
 
 
