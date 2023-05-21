@@ -1,9 +1,12 @@
-package Task4;
+package Task7;
+
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.Arrays;
 import java.util.Random;
 
-public class Main {
+public class main {
     public static void main(String[] args) {
 
         game g = new game();
@@ -43,6 +46,11 @@ class easyAi{
         return secretCode;
     }
     public void start(int secretCode){
+        // Create a StringBuilder to store the game results
+        StringBuilder gameResults = new StringBuilder();
+        // Add the secret codes to the game results
+        gameResults.append("Player's Secret Code: ").append(secretCode).append("\n");
+        gameResults.append("Computer's Secret Code: ").append(com.generatedInt()).append("\n");
 
         int[] secretCodeArr = play.inputArr(secretCode);
         int humanCtr = 7;
@@ -62,22 +70,53 @@ class easyAi{
                     String out = bulls + " Bulls " + cows + " Cows |"+"Try again "+ humanCtr + " attempts left";
                     System.out.println(out);
                     System.out.println("-----------------------------------------------------");
-                }
 
-                else if (cows == 0 && bulls ==0){
-                    System.out.println("Computer Guessed: " + computerGuess);
-                    humanCtr--;
-                    String out = bulls + "bulls " + cows + " cows | " + "Try again" + humanCtr + " attempts left";
-                    System.out.println(out);
-                    System.out.println("-----------------------------------------------------");
+                    // Add the computer's guess and result to the game results
+                    gameResults.append("Computer Guessed: ").append(computerGuess).append("\n");
+                    gameResults.append(out).append("\n");
+                }else{
+                    System.out.println("Player's Turn");
+                    int humanGuess = play.input();
+                    int[] humanGuessArr = play.inputArr(humanGuess);
+                     bulls = com.bullCounter(secretCodeArr,humanGuessArr);
+                    cows = com.cowCounter(secretCodeArr,humanGuessArr) - bulls;
+                    if(bulls == 4) {
+                        System.out.println("Player Guessed: " + humanGuess);
+                        String out = "You Won";
+                        System.out.println(out);
+                        System.out.println("-----------------------------------------------------");
+
+                        // Add the player's guess and result to the game results
+                        gameResults.append("Player Guessed: ").append(humanGuess).append("\n");
+                        gameResults.append(out).append("\n");
+                    }
+                    else if (bulls == 0 && cows == 0) {
+                        System.out.println("Player Guessed: " + humanGuess);
+                        computerCtr--;
+                        String out = bulls + " bulls " + cows + " cows | " + "Try again " + computerCtr + " attempts left";
+                        System.out.println(out);
+                        System.out.println("-----------------------------------------------------");
+
+                        // Add the player's guess and result to the game results
+                        gameResults.append("Player Guessed: ").append(humanGuess).append("\n");
+                        gameResults.append(out).append("\n");
+                    }
+                    else{
+                        System.out.println("Player Guessed: " + humanGuess);
+                        computerCtr--;
+                        String out = bulls + " Bulls " + cows + " Cows |"+"Try again "+ computerCtr + " attempts left";
+                        System.out.println(out);
+                        System.out.println("-----------------------------------------------------");
+
+                        // Add the player's guess and result to the game results
+                        gameResults.append("Player Guessed: ").append(humanGuess).append("\n");
+                        gameResults.append(out).append("\n");
+
+
+                    }
+
                 }
-                else {
-                    System.out.println("Computer Guessed: " + computerGuess);
-                    String out = "Computer Won";
-                    System.out.println(out);
-                    System.out.println("-----------------------------------------------------");
-                }
-            }else{
+            } else {
                 System.out.println("Player's Turn");
                 int humanGuess = play.input();
                 int[] humanGuessArr = play.inputArr(humanGuess);
@@ -88,6 +127,10 @@ class easyAi{
                     String out = "You Won";
                     System.out.println(out);
                     System.out.println("-----------------------------------------------------");
+
+                    // Add the player's guess and result to the game results
+                    gameResults.append("Player Guessed: ").append(humanGuess).append("\n");
+                    gameResults.append(out).append("\n");
                 }
                 else if (bulls == 0 && cows == 0) {
                     System.out.println("Player Guessed: " + humanGuess);
@@ -95,6 +138,10 @@ class easyAi{
                     String out = bulls + " bulls " + cows + " cows | " + "Try again " + computerCtr + " attempts left";
                     System.out.println(out);
                     System.out.println("-----------------------------------------------------");
+
+                    // Add the player's guess and result to the game results
+                    gameResults.append("Player Guessed: ").append(humanGuess).append("\n");
+                    gameResults.append(out).append("\n");
                 }
                 else{
                     System.out.println("Player Guessed: " + humanGuess);
@@ -102,25 +149,52 @@ class easyAi{
                     String out = bulls + " Bulls " + cows + " Cows |"+"Try again "+ computerCtr + " attempts left";
                     System.out.println(out);
                     System.out.println("-----------------------------------------------------");
+
+                    // Add the player's guess and result to the game results
+                    gameResults.append("Player Guessed: ").append(humanGuess).append("\n");
+                    gameResults.append(out).append("\n");
+
                 }
 
             }
         }
-        if (turn == 14){
 
-            System.out.println("No one guessed correctly, Its a tie");
-            System.out.println("-----------------------------------------------------");
+        // Ask the player if they want to save the game results to a file
+        System.out.println("Do you want to save the game results to a file? (y/n)");
+        Scanner sc = new Scanner(System.in);
+        String saveToFile = sc.nextLine();
+        if (saveToFile.equals("y")) {
+            // Prompt the player for a filename
+            System.out.println("Enter a filename:");
+            String filename = sc.nextLine();
+
+            // Save the game results to the file
+            try {
+                FileWriter writer = new FileWriter(filename);
+                writer.write(gameResults.toString());
+                writer.close();
+                System.out.println("Game results saved to " + filename);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
+
 class midAi extends easyAi {
     public void start(int secretCode){
+        // Create a StringBuilder to store the game results
+        StringBuilder gameResults = new StringBuilder();
+        // Add the secret codes to the game results
+        gameResults.append("Player's Secret Code: ").append(secretCode).append("\n");
+        gameResults.append("Computer's Secret Code: ").append(com.generatedInt()).append("\n");
+
         int[][] aiGuesses = new int[8][4]; // 2D array to store the AI's guesses
         int[] secretCodeArr = play.inputArr(secretCode);
         int humanCtr = 7;
         int computerCtr = 7;
         int turn = 0;
-        while (turn < 14 ) {
+        while (turn < 14) {
             int computerGuess = com.generatedInt();
             turn++;
             boolean repeatGuess = isRepeatGuess(computerGuess, aiGuesses);
@@ -138,17 +212,33 @@ class midAi extends easyAi {
                         String out = bulls + " Bulls " + cows + " Cows |" + "Try again " + humanCtr + " attempts left";
                         System.out.println(out);
                         System.out.println("-----------------------------------------------------");
-                    } else if (cows == 0 && bulls == 0) {
+
+                        // Add the computer's guess and result to the game results
+                        gameResults.append("Computer Guessed: ").append(computerGuess).append("\n");
+                        gameResults.append(out).append("\n");
+                    } else if (
+
+
+                    cows == 0 && bulls == 0) {
                         System.out.println("Computer Guessed: " + computerGuess);
                         humanCtr--;
-                        String out = bulls + "bulls " + cows + " cows | " + "Try again " + humanCtr + " attempts left";
+                        String out = bulls + "bulls " + cows + " cows | " + "Try again" + humanCtr + " attempts left";
                         System.out.println(out);
                         System.out.println("-----------------------------------------------------");
+
+                        // Add the computer's guess and result to the game results
+                        gameResults.append("Computer Guessed: ").append(computerGuess).append("\n");
+                        gameResults.append(out).append("\n");
                     } else {
                         System.out.println("Computer Guessed: " + computerGuess);
                         String out = "Computer Won";
                         System.out.println(out);
                         System.out.println("-----------------------------------------------------");
+
+                        // Add the computer's guess and result to the game results
+                        gameResults.append("Computer Guessed: ").append(computerGuess).append("\n");
+                        gameResults.append(out).append("\n");
+                        break;
                     }
                 } else {
                     System.out.println("Player's Turn");
@@ -161,6 +251,11 @@ class midAi extends easyAi {
                         String out = "You Won";
                         System.out.println(out);
                         System.out.println("-----------------------------------------------------");
+
+                        // Add the player's guess and result to the game results
+                        gameResults.append("Player Guessed: ").append(humanGuess).append("\n");
+                        gameResults.append(out).append("\n");
+                        break;
                     }
                     else if (bulls == 0 && cows == 0) {
                         System.out.println("Player Guessed: " + humanGuess);
@@ -168,27 +263,61 @@ class midAi extends easyAi {
                         String out = bulls + " bulls " + cows + " cows | " + "Try again " + computerCtr + " attempts left";
                         System.out.println(out);
                         System.out.println("-----------------------------------------------------");
+
+                        // Add the player's guess and result to the game results
+                        gameResults.append("Player Guessed: ").append(humanGuess).append("\n");
+                        gameResults.append(out).append("\n");
                     }
                     else{
                         System.out.println("Player Guessed: " + humanGuess);
                         computerCtr--;
                         String out = bulls + " Bulls " + cows + " Cows |"+"Try again "+ computerCtr + " attempts left";
                         System.out.println(out);
+
+
                         System.out.println("-----------------------------------------------------");
+
+                        // Add the player's guess and result to the game results
+                        gameResults.append("Player Guessed: ").append(humanGuess).append("\n");
+                        gameResults.append(out).append("\n");
                     }
 
                 }
-
             } else {
-               turn--;
+                // AI repeats a guess, skip this turn
+                turn--;
             }
             if (humanCtr == 0 && computerCtr ==0){
-
-                System.out.println("No one guessed correctly, Its a tie");
+                String out = "No one guessed correctly, Its a tie";
+                System.out.println(out);
                 System.out.println("-----------------------------------------------------");
+
+                // Add the tie message to the game results
+                gameResults.append(out).append("\n");
+                break;
             }
         }
 
+
+        // Ask the player if they want to save the game results to a file
+        System.out.println("Do you want to save the game results to a file? (y/n)");
+        Scanner sc = new Scanner(System.in);
+        String saveToFile = sc.nextLine();
+        if (saveToFile.equals("y")) {
+            // Prompt the player for a filename
+            System.out.println("Enter a filename:");
+            String filename = sc.nextLine()+".txt";
+
+            // Save the game results to the file
+            try {
+                FileWriter writer = new FileWriter(filename);
+                writer.write(gameResults.toString());
+                writer.close();
+                System.out.println("Game results saved to " + filename);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private boolean isRepeatGuess(int computerGuess, int[][] aiGuesses) {
@@ -200,6 +329,7 @@ class midAi extends easyAi {
         return false;
     }
 }
+
 class player {
     private int input;
 
@@ -221,7 +351,7 @@ class player {
     public static int[] inputArr(int input) {       //turns inputs into arrays
         int[] inputArr = new int[4];
         for (int i = 0; i < 4; i++) {
-            inputArr[i] = input % 10;
+            inputArr [i] = input % 10;
             input /= 10;
         }
         return inputArr;
@@ -300,12 +430,13 @@ class computer extends player {
             return generatedInt();
         }
     }
+
+
 }
 class human extends player {
-   public int input() {
+    public int input() {
         Scanner sc = new Scanner(System.in);
-        int input = sc.nextInt();
-        if (!inputValidation(input)) {
+        int input = sc.nextInt();if (!inputValidation(input)) {
             System.out.println("Invalid Input, please try again");
             return input();
         }
@@ -316,8 +447,3 @@ class human extends player {
     }
 
 }
-
-
-
-
-

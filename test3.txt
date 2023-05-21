@@ -1,0 +1,31 @@
+Player's Secret Code: 1234
+Computer's Secret Code: 7698
+Player Guessed: 5678
+0 bulls 0 cows | Try again 6 attempts left
+Computer Guessed: 5618
+0 Bulls 1 Cows |Try again 6 attempts left
+Player Guessed: 9876
+0 bulls 0 cows | Try again 5 attempts left
+Computer Guessed: 1392
+1 Bulls 2 Cows |Try again 5 attempts left
+Player Guessed: 9876
+0 bulls 0 cows | Try again 4 attempts left
+Computer Guessed: 8934
+2 Bulls 0 Cows |Try again 4 attempts left
+Player Guessed: 9876
+0 bulls 0 cows | Try again 3 attempts left
+Computer Guessed: 7382
+0 Bulls 2 Cows |Try again 3 attempts left
+Player Guessed: 9876
+0 bulls 0 cows | Try again 2 attempts left
+Computer Guessed: 6743
+0 Bulls 2 Cows |Try again 2 attempts left
+Player Guessed: 8769
+0 bulls 0 cows | Try again 1 attempts left
+Computer Guessed: 3218
+1 Bulls 2 Cows |Try again 1 attempts left
+Player Guessed: 7645
+0 Bulls 1 Cows |Try again 0 attempts left
+Computer Guessed: 5438
+1 Bulls 1 Cows |Try again 0 attempts left
+No one guessed correctly, Its a tie

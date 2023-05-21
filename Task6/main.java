@@ -154,7 +154,7 @@ class easyAi{
         if (saveToFile.equals("y")) {
             // Prompt the player for a filename
             System.out.println("Enter a filename:");
-            String filename = sc.nextLine();
+            String filename = sc.nextLine()+".txt";
 
             // Save the game results to the file
             try {

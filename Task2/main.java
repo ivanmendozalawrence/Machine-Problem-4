@@ -84,12 +84,12 @@ class ComputerPlayer extends Player {
 
 class Main {
     public static void main(String[] args) {
-        Game.test();
+        Game.game();
     }
 }
 
 class Game {
-    public static void test() {
+    public static void game() {
         ComputerPlayer computerPlayer = new ComputerPlayer();
         HumanPlayer humanPlayer = new HumanPlayer();
 
